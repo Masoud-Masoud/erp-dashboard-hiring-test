@@ -17,26 +17,33 @@ This simulates a “front-end on top of an existing front-end” used for data e
 ---
 
 ## Setup
-Run the API and the UI in two terminals.
 
-### Terminal 1 (API)
+Run the API and the UI in **two separate terminals**.
+
+### Terminal 1 — API
 ```bash
 cd server
 npm install
 npm run dev
+```
 
-API runs on http://localhost:3001
+API runs at:  
+**http://localhost:3001**
 
+---
 
-### Terminal 2 (UI)
+### Terminal 2 — UI
 ```bash
 cd client
 npm install
 npm run dev
+```
 
-UI runs on http://localhost:5173
+UI runs at:  
+**http://localhost:5173**
 
+---
 
-**Login credentials**
-username: candidate
-password: test123
+## Login Credentials
+- **Username:** `candidate`
+- **Password:** `test123`
