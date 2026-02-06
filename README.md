@@ -24,3 +24,19 @@ Run the API and the UI in two terminals.
 cd server
 npm install
 npm run dev
+
+API runs on http://localhost:3001
+
+
+### Terminal 2 (UI)
+```bash
+cd client
+npm install
+npm run dev
+
+UI runs on http://localhost:5173
+
+
+**Login credentials**
+username: candidate
+password: test123
