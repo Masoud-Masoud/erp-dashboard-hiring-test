@@ -237,91 +237,93 @@ function Milestones({ jobId, setBanner }) {
       {loading ? (
         <div className="small muted">Loading milestones...</div>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th style={{ width: 220 }}>Name</th>
-              <th style={{ width: 140 }}>Responsible</th>
-              <th style={{ width: 110 }}>Complete</th>
-              <th style={{ width: 170 }}>Completion Date</th>
-              <th>Note</th>
-              <th style={{ width: 210 }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map(m => {
-              const isEditing = editingId === m.id;
-              const row = isEditing ? draft : m;
-
-              return (
-                <tr key={m.id}>
-                  <td>
-                    <div><strong>{m.name}</strong></div>
-                    <div className="small">ID: {m.id}</div>
-                  </td>
-
-                  <td>
-                    <input
-                      value={row?.responsibleCode || ""}
-                      disabled={!isEditing}
-                      onChange={e => updateDraft({ responsibleCode: e.target.value })}
-                    />
-                  </td>
-
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={!!row?.isComplete}
-                      disabled={!isEditing}
-                      onChange={e => {
-                        const checked = e.target.checked;
-                        // Candidate should ensure these rules are applied correctly
-                        updateDraft({
-                          isComplete: checked,
-                          completionDate: checked ? (row.completionDate || todayISO()) : null
-                        });
-                      }}
-                    />
-                  </td>
-
-                  <td>
-                    <input
-                      type="date"
-                      value={row?.completionDate || ""}
-                      disabled={!isEditing || !row?.isComplete}
-                      className={!row?.isComplete ? "muted" : ""}
-                      onChange={e => updateDraft({ completionDate: e.target.value || null })}
-                    />
-                  </td>
-
-                  <td>
-                    <textarea
-                      value={row?.note || ""}
-                      disabled={!isEditing}
-                      onChange={e => updateDraft({ note: e.target.value })}
-                    />
-                  </td>
-
-                  <td>
-                    {!isEditing ? (
-                      <button onClick={() => startEdit(m)}>Edit</button>
-                    ) : (
-                      <div className="row">
-                        <button className="primary" onClick={saveEdit}>Save</button>
-                        <button onClick={cancelEdit}>Cancel</button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-            {items.length === 0 && (
+        <div className="table-responsive">
+          <table className="milestones-table">
+            <thead>
               <tr>
-                <td colSpan="6" className="small muted">No milestones for this job.</td>
+                <th style={{ width: 220 }}>Name</th>
+                <th style={{ width: 140 }}>Responsible</th>
+                <th style={{ width: 110 }}>Complete</th>
+                <th style={{ width: 170 }}>Completion Date</th>
+                <th>Note</th>
+                <th style={{ width: 210 }}>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {items.map(m => {
+                const isEditing = editingId === m.id;
+                const row = isEditing ? draft : m;
+
+                return (
+                  <tr key={m.id}>
+                    <td data-label="Name">
+                      <div><strong>{m.name}</strong></div>
+                      <div className="small">ID: {m.id}</div>
+                    </td>
+
+                    <td data-label="Responsible">
+                      <input
+                        value={row?.responsibleCode || ""}
+                        disabled={!isEditing}
+                        onChange={e => updateDraft({ responsibleCode: e.target.value })}
+                      />
+                    </td>
+
+                    <td data-label="Complete">
+                      <input
+                        type="checkbox"
+                        checked={!!row?.isComplete}
+                        disabled={!isEditing}
+                        onChange={e => {
+                          const checked = e.target.checked;
+                          // Candidate should ensure these rules are applied correctly
+                          updateDraft({
+                            isComplete: checked,
+                            completionDate: checked ? (row.completionDate || todayISO()) : null
+                          });
+                        }}
+                      />
+                    </td>
+
+                    <td data-label="Completion Date">
+                      <input
+                        type="date"
+                        value={row?.completionDate || ""}
+                        disabled={!isEditing || !row?.isComplete}
+                        className={!row?.isComplete ? "muted" : ""}
+                        onChange={e => updateDraft({ completionDate: e.target.value || null })}
+                      />
+                    </td>
+
+                    <td data-label="Note">
+                      <textarea
+                        value={row?.note || ""}
+                        disabled={!isEditing}
+                        onChange={e => updateDraft({ note: e.target.value })}
+                      />
+                    </td>
+
+                    <td data-label="Actions">
+                      {!isEditing ? (
+                        <button onClick={() => startEdit(m)}>Edit</button>
+                      ) : (
+                        <div className="row">
+                          <button className="primary" onClick={saveEdit}>Save</button>
+                          <button onClick={cancelEdit}>Cancel</button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+              {items.length === 0 && (
+                <tr>
+                  <td colSpan="6" className="small muted">No milestones for this job.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <div className="small" style={{ marginTop: 10 }}>

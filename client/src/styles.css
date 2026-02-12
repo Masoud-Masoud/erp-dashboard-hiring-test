@@ -5,14 +5,27 @@
 
 body {
   margin: 0;
+  padding: 24px;
   background: #f6f7fb;
   color: #111;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    padding: 32px;
+  }
+}
+
 .container {
-  max-width: 1100px;
-  margin: 24px auto;
-  padding: 0 16px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .card {
@@ -117,4 +130,90 @@ th, td {
 
 .muted {
   opacity: 0.65;
+}
+
+/* Table responsive wrapper */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile: transform table to cards */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: visible;
+  }
+
+  .milestones-table,
+  .milestones-table thead,
+  .milestones-table tbody,
+  .milestones-table th,
+  .milestones-table td,
+  .milestones-table tr {
+    display: block;
+  }
+
+  .milestones-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .milestones-table tr {
+    border: 1px solid #e7e8ee;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #fff;
+  }
+
+  .milestones-table td {
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+    padding: 12px 12px 12px 40%;
+    text-align: left;
+  }
+
+  .milestones-table td:last-child {
+    border-bottom: none;
+  }
+
+  .milestones-table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 12px;
+    width: 35%;
+    font-weight: 600;
+    font-size: 12px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .milestones-table td input,
+  .milestones-table td textarea {
+    width: 100%;
+    margin: 0;
+  }
+
+  .milestones-table td .row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .milestones-table td .row button {
+    width: 100%;
+  }
+}
+
+/* Tablet: horizontal scroll */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .milestones-table {
+    min-width: 800px;
+  }
 }
