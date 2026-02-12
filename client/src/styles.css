@@ -79,47 +79,50 @@ button {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #505050;
-  background: #2d2d2d;
+  background: #3a3a3a;
   color: #e0e0e0;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
 }
 
+/* Boutons secondaires (Edit, Cancel) - Neutre */
 button:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  border-color: #404040;
-  background: #353535;
+  border-color: #606060;
+  background: #454545;
 }
 
 button:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
+/* Boutons primaires (Save, Sign in) - Orange pour actions principales */
 button.primary {
-  border-color: #2f6fed;
-  background: #2f6fed;
+  border-color: #ff7a00;
+  background: #ff7a00;
   color: #fff;
 }
 
 button.primary:hover:not(:disabled) {
-  background: #2563eb;
-  border-color: #2563eb;
-  box-shadow: 0 2px 8px rgba(47, 111, 237, 0.3);
+  background: #ff8c1a;
+  border-color: #ff8c1a;
+  box-shadow: 0 2px 8px rgba(255, 122, 0, 0.4);
 }
 
+/* Boutons danger (Logout, Delete) - Rouge-orange pour actions destructives */
 button.danger {
-  border-color: #e5484d;
-  background: #e5484d;
+  border-color: #ff4d00;
+  background: #ff4d00;
   color: #fff;
 }
 
 button.danger:hover:not(:disabled) {
-  background: #d7373f;
-  border-color: #d7373f;
-  box-shadow: 0 2px 8px rgba(229, 72, 77, 0.3);
+  background: #ff6b1a;
+  border-color: #ff6b1a;
+  box-shadow: 0 2px 8px rgba(255, 77, 0, 0.4);
 }
 
 button:disabled {

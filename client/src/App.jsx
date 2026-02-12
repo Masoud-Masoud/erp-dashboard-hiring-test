@@ -39,7 +39,7 @@ export default function App() {
     <div className="container">
       <div className="space-between" style={{ marginBottom: 12 }}>
         <h2 style={{ margin: 0 }}>ERP Dashboard Hiring Test (Phase 1)</h2>
-        {token && <button onClick={handleLogout}>Logout</button>}
+        {token && <button className="danger" onClick={handleLogout}>Logout</button>}
       </div>
 
       {banner && <div className={`banner ${banner.type}`}>{banner.text}</div>}
