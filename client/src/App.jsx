@@ -111,7 +111,7 @@ function Dashboard({ setBanner }) {
           <span className="small">{loadingJobs ? "Loading..." : `${jobs.length} result(s)`}</span>
         </div>
         <input
-          style={{ width: "100%" }}
+          style={{ width: "100%", boxSizing: "border-box" }}
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search by jobId, customer, description..."

@@ -60,6 +60,7 @@ input, select, textarea {
   border-radius: 8px;
   border: 1px solid #cfd3df;
   background: white;
+  box-sizing: border-box;
 }
 
 textarea {
