@@ -110,12 +110,23 @@ function Dashboard({ setBanner }) {
           <h3 style={{ marginTop: 0 }}>Jobs</h3>
           <span className="small">{loadingJobs ? "Loading..." : `${jobs.length} result(s)`}</span>
         </div>
-        <input
-          style={{ width: "100%", boxSizing: "border-box" }}
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search by jobId, customer, description..."
-        />
+        <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+          <svg
+            style={{ position: "absolute", left: "12px", width: "18px", height: "18px", color: "#b0b0b0", pointerEvents: "none" }}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            style={{ width: "100%", boxSizing: "border-box", paddingLeft: "40px" }}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search by jobId, customer, description..."
+          />
+        </div>
         <div style={{ marginTop: 12 }}>
           {jobs.map(j => (
             <div
