@@ -135,7 +135,9 @@ function Dashboard({ setBanner }) {
               style={{
                 marginBottom: 10,
                 cursor: "pointer",
-                borderColor: j.jobId === selectedJobId ? "#2f6fed" : "#e7e8ee"
+                borderColor: j.jobId === selectedJobId ? "#ff7a00" : "#404040",
+                borderWidth: j.jobId === selectedJobId ? "2px" : "1px",
+                transition: "border-color 0.2s ease, border-width 0.2s ease"
               }}
               onClick={() => setSelectedJobId(j.jobId)}
             >
@@ -266,7 +268,14 @@ function Milestones({ jobId, setBanner }) {
                 const row = isEditing ? draft : m;
 
                 return (
-                  <tr key={m.id}>
+                  <tr 
+                    key={m.id}
+                    style={{
+                      border: isEditing ? "2px solid #ff7a00" : "none",
+                      borderRadius: isEditing ? "4px" : "0",
+                      transition: "border 0.2s ease"
+                    }}
+                  >
                     <td data-label="Name">
                       <div><strong>{m.name}</strong></div>
                       <div className="small">ID: {m.id}</div>
