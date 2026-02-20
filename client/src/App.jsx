@@ -39,7 +39,7 @@ export default function App() {
     <div className="container">
       <div className="space-between" style={{ marginBottom: 12 }}>
         <h2 style={{ margin: 0 }}>ERP Dashboard Hiring Test (Phase 1)</h2>
-        {token && <button onClick={handleLogout}>Logout</button>}
+        {token && <button className="danger" onClick={handleLogout}>Logout</button>}
       </div>
 
       {banner && <div className={`banner ${banner.type}`}>{banner.text}</div>}
@@ -110,12 +110,23 @@ function Dashboard({ setBanner }) {
           <h3 style={{ marginTop: 0 }}>Jobs</h3>
           <span className="small">{loadingJobs ? "Loading..." : `${jobs.length} result(s)`}</span>
         </div>
-        <input
-          style={{ width: "100%" }}
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search by jobId, customer, description..."
-        />
+        <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+          <svg
+            style={{ position: "absolute", left: "12px", width: "18px", height: "18px", color: "#b0b0b0", pointerEvents: "none" }}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            style={{ width: "100%", boxSizing: "border-box", paddingLeft: "40px" }}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search by jobId, customer, description..."
+          />
+        </div>
         <div style={{ marginTop: 12 }}>
           {jobs.map(j => (
             <div
@@ -124,7 +135,9 @@ function Dashboard({ setBanner }) {
               style={{
                 marginBottom: 10,
                 cursor: "pointer",
-                borderColor: j.jobId === selectedJobId ? "#2f6fed" : "#e7e8ee"
+                borderColor: j.jobId === selectedJobId ? "#ff7a00" : "#404040",
+                borderWidth: j.jobId === selectedJobId ? "2px" : "1px",
+                transition: "border-color 0.2s ease, border-width 0.2s ease"
               }}
               onClick={() => setSelectedJobId(j.jobId)}
             >
@@ -237,91 +250,100 @@ function Milestones({ jobId, setBanner }) {
       {loading ? (
         <div className="small muted">Loading milestones...</div>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th style={{ width: 220 }}>Name</th>
-              <th style={{ width: 140 }}>Responsible</th>
-              <th style={{ width: 110 }}>Complete</th>
-              <th style={{ width: 170 }}>Completion Date</th>
-              <th>Note</th>
-              <th style={{ width: 210 }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map(m => {
-              const isEditing = editingId === m.id;
-              const row = isEditing ? draft : m;
-
-              return (
-                <tr key={m.id}>
-                  <td>
-                    <div><strong>{m.name}</strong></div>
-                    <div className="small">ID: {m.id}</div>
-                  </td>
-
-                  <td>
-                    <input
-                      value={row?.responsibleCode || ""}
-                      disabled={!isEditing}
-                      onChange={e => updateDraft({ responsibleCode: e.target.value })}
-                    />
-                  </td>
-
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={!!row?.isComplete}
-                      disabled={!isEditing}
-                      onChange={e => {
-                        const checked = e.target.checked;
-                        // Candidate should ensure these rules are applied correctly
-                        updateDraft({
-                          isComplete: checked,
-                          completionDate: checked ? (row.completionDate || todayISO()) : null
-                        });
-                      }}
-                    />
-                  </td>
-
-                  <td>
-                    <input
-                      type="date"
-                      value={row?.completionDate || ""}
-                      disabled={!isEditing || !row?.isComplete}
-                      className={!row?.isComplete ? "muted" : ""}
-                      onChange={e => updateDraft({ completionDate: e.target.value || null })}
-                    />
-                  </td>
-
-                  <td>
-                    <textarea
-                      value={row?.note || ""}
-                      disabled={!isEditing}
-                      onChange={e => updateDraft({ note: e.target.value })}
-                    />
-                  </td>
-
-                  <td>
-                    {!isEditing ? (
-                      <button onClick={() => startEdit(m)}>Edit</button>
-                    ) : (
-                      <div className="row">
-                        <button className="primary" onClick={saveEdit}>Save</button>
-                        <button onClick={cancelEdit}>Cancel</button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-            {items.length === 0 && (
+        <div className="table-responsive">
+          <table className="milestones-table">
+            <thead>
               <tr>
-                <td colSpan="6" className="small muted">No milestones for this job.</td>
+                <th style={{ width: 220 }}>Name</th>
+                <th style={{ width: 140 }}>Responsible</th>
+                <th style={{ width: 110 }}>Complete</th>
+                <th style={{ width: 170 }}>Completion Date</th>
+                <th>Note</th>
+                <th style={{ width: 210 }}>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {items.map(m => {
+                const isEditing = editingId === m.id;
+                const row = isEditing ? draft : m;
+
+                return (
+                  <tr 
+                    key={m.id}
+                    style={{
+                      border: isEditing ? "2px solid #ff7a00" : "none",
+                      borderRadius: isEditing ? "4px" : "0",
+                      transition: "border 0.2s ease"
+                    }}
+                  >
+                    <td data-label="Name">
+                      <div><strong>{m.name}</strong></div>
+                      <div className="small">ID: {m.id}</div>
+                    </td>
+
+                    <td data-label="Responsible">
+                      <input
+                        value={row?.responsibleCode || ""}
+                        disabled={!isEditing}
+                        onChange={e => updateDraft({ responsibleCode: e.target.value })}
+                      />
+                    </td>
+
+                    <td data-label="Complete">
+                      <input
+                        type="checkbox"
+                        checked={!!row?.isComplete}
+                        disabled={!isEditing}
+                        onChange={e => {
+                          const checked = e.target.checked;
+                          // Candidate should ensure these rules are applied correctly
+                          updateDraft({
+                            isComplete: checked,
+                            completionDate: checked ? (row.completionDate || todayISO()) : null
+                          });
+                        }}
+                      />
+                    </td>
+
+                    <td data-label="Completion Date">
+                      <input
+                        type="date"
+                        value={row?.completionDate || ""}
+                        disabled={!isEditing || !row?.isComplete}
+                        className={!row?.isComplete ? "muted" : ""}
+                        onChange={e => updateDraft({ completionDate: e.target.value || null })}
+                      />
+                    </td>
+
+                    <td data-label="Note">
+                      <textarea
+                        value={row?.note || ""}
+                        disabled={!isEditing}
+                        onChange={e => updateDraft({ note: e.target.value })}
+                      />
+                    </td>
+
+                    <td data-label="Actions">
+                      {!isEditing ? (
+                        <button onClick={() => startEdit(m)}>Edit</button>
+                      ) : (
+                        <div className="row">
+                          <button className="primary" onClick={saveEdit}>Save</button>
+                          <button onClick={cancelEdit}>Cancel</button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+              {items.length === 0 && (
+                <tr>
+                  <td colSpan="6" className="small muted">No milestones for this job.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <div className="small" style={{ marginTop: 10 }}>
